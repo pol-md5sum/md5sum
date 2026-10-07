@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>md5sum</title>
+  <meta name="description" content="디지털 포렌식 · 위협 인텔리전스 개인 홈페이지">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top">md5sum<span class="cursor">_</span></a>
+    <nav>
+      <a href="#about">소개</a>
+      <a href="#skills">분야</a>
+      <a href="#projects">프로젝트</a>
+      <a href="#contact">연락처</a>
+      <button id="theme-toggle" type="button" aria-label="테마 전환">◐</button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ✏️ 이름·한 줄 소개를 수정하세요 -->
+    <section class="hero">
+      <p class="prompt">$ whoami</p>
+      <h1>[이름 또는 닉네임]</h1>
+      <p class="tagline">디지털 포렌식 · 침해사고 분석 · 위협 인텔리전스</p>
+      <p class="hash" title="장식용 문자열">d41d8cd98f00b204e9800998ecf8427e</p>
+    </section>
+
+    <!-- ✏️ 자기소개 -->
+    <section id="about">
+      <h2><span>01</span> 소개</h2>
+      <p>
+        [자기소개를 2~3문장으로 작성하세요. 예: 현재 하는 일, 관심 분야, 이 사이트에서 다루는 내용 등]
+      </p>
+    </section>
+
+    <!-- ✏️ 전문 분야 -->
+    <section id="skills">
+      <h2><span>02</span> 분야</h2>
+      <div class="cards">
+        <article class="card">
+          <h3>디지털 포렌식</h3>
+          <p>디스크·메모리·모바일 아티팩트 분석, 타임라인 재구성</p>
+        </article>
+        <article class="card">
+          <h3>악성코드 분석</h3>
+          <p>스크립트·실행파일·웹쉘 정적 분석, IOC 추출</p>
+        </article>
+        <article class="card">
+          <h3>위협 인텔리전스</h3>
+          <p>APT 그룹 TTP 추적, OSINT 기반 인프라 연계 분석</p>
+        </article>
+        <article class="card">
+          <h3>이메일 위협 분석</h3>
+          <p>헤더·경유지 분석, 피싱 링크 및 첨부파일 검증</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ✏️ 프로젝트 / 글: 항목을 복사해서 추가하세요 -->
+    <section id="projects">
+      <h2><span>03</span> 프로젝트 · 글</h2>
+      <ul class="list">
+        <li>
+          <a href="#">[프로젝트 또는 글 제목]</a>
+          <span class="meta">2026 · 태그</span>
+          <p>[한 줄 설명]</p>
+        </li>
+        <li>
+          <a href="#">[프로젝트 또는 글 제목]</a>
+          <span class="meta">2026 · 태그</span>
+          <p>[한 줄 설명]</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ✏️ 연락처: 공개해도 되는 정보만 넣으세요 -->
+    <section id="contact">
+      <h2><span>04</span> 연락처</h2>
+      <ul class="links">
+        <li><a href="https://github.com/pol-md5sum">GitHub</a></li>
+        <li><a href="mailto:[이메일 주소]">Email</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year">2026</span> md5sum</p>
+  </footer>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      try {
+        var saved = localStorage.getItem('theme');
+        if (saved) root.setAttribute('data-theme', saved);
+      } catch (e) {}
+      document.getElementById('theme-toggle').addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') === 'dark' ||
+          (!root.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+        var next = dark ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
