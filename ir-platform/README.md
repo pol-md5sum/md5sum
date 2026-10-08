@@ -11,7 +11,7 @@ Python 3.10 이상 표준 라이브러리만으로 동작하므로, 인터넷이
 | M2 증거 수집·보존 | 1단계 | ✅ | MD5·SHA-256 이중 해시, 읽기 전용 보관, 해시 체인 취급 이력, 열람 전 재검증, 반출 기록 |
 | M7 이메일 분석 | 1단계 | ✅ | 제목·일시(UTC/KST)·수발신 계정·경유지·최초 발신 IP·SPF/DKIM/DMARC·사칭 징후·첨부·링크 (.eml) |
 | M8 IOC·OSINT | 1단계 | ✅ | IOC 추출·정규화·무력화, VirusTotal·Criminal IP·Shodan 조회, 캐시, 호출 간격 제한 |
-| M12 보고서 | 1단계 | ✅ | Markdown 보고서, 보고서용 문장, 3줄 요약, 개인정보 자동 마스킹 |
+| M12 보고서·대시보드 | 1·4단계 | ✅ | Markdown 보고서(보고서용 문장, 3줄 요약, 개인정보 마스킹). 전체 사건 대시보드: 단일 HTML·오프라인, 핵심 지표, 신고 기한, 탐지 유형, ATT&CK 전술별 히트맵, 사건 필터, 라이트·다크 |
 | 법적 요건 | 1단계 | ✅ | 신고 기한 계산(규칙 파일), 개인정보 마스킹 |
 | M3 타임라인·이벤트 로그 | 2단계 | ✅ | Windows 이벤트 XML(EVTX는 python-evtx 선택) 탐지 규칙: 무차별 대입·스프레이·로그인 성공, 외부 RDP, Office→셸, 서비스·예약 작업, 계정·권한 그룹, LSASS 접근, 로그 삭제, PowerShell 스크립트 블록. CSV·JSONL 가져오기와 전 모듈 통합 타임라인 |
 | M5 정적 분석 | 2단계 | ✅ | 형식 판별, PE 헤더·섹션 엔트로피·가져오기·imphash·PDB, 문자열·한글 흔적, PowerShell 인코딩 해제, 스크립트·웹쉘 규칙, YARA(선택) |
@@ -68,6 +68,7 @@ irsys timeline import IR-2026-0001 hayabusa.csv --label Hayabusa
 irsys timeline build IR-2026-0001
 irsys apt IR-2026-0001 --text "대북정책 세미나"
 irsys report IR-2026-0001 --out IR-2026-0001.md
+irsys dashboard --out dashboard.html           # 모든 사건, 브라우저로 열기
 
 # 증거 무결성과 취급 이력
 irsys evidence verify IR-2026-0001-EV001

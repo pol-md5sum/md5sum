@@ -9,7 +9,7 @@ import os
 import sys
 from pathlib import Path
 
-from . import (attribution, cases, emailx, eventlog, evidence, ioc, legal, memory, network, osint, report,
+from . import (attribution, cases, dashboard, emailx, eventlog, evidence, ioc, legal, memory, network, osint, report,
                response, static, timeline)
 from .db import connect, home, save_analysis
 
@@ -219,6 +219,11 @@ def cmd_report(args, conn) -> None:
         sys.stdout.write(text)
 
 
+def cmd_dashboard(args, conn) -> None:
+    Path(args.out).write_text(dashboard.build(conn), encoding="utf-8")
+    print(args.out)
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="irsys", description="침해사고 대응·분석 종합시스템")
     p.add_argument("--actor", help="작업자 이름(기본: IRSYS_ACTOR 또는 OS 사용자)")
@@ -291,6 +296,9 @@ def build_parser() -> argparse.ArgumentParser:
     x = lg.add_parser("deadlines"); x.add_argument("case")
     x = lg.add_parser("mask"); x.add_argument("file")
 
+    db_ = sub.add_parser("dashboard", help="M12 전체 사건 대시보드(HTML)")
+    db_.add_argument("--out", default="irsys-dashboard.html")
+
     r = sub.add_parser("report", help="M12 보고서")
     r.add_argument("case"); r.add_argument("--out")
     return p
@@ -298,7 +306,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 HANDLERS = {"case": cmd_case, "evidence": cmd_evidence, "email": cmd_email, "static": cmd_static, "ioc": cmd_ioc,
             "network": cmd_network, "evtlog": cmd_evtlog, "memory": cmd_memory, "response": cmd_response,
-            "timeline": cmd_timeline, "apt": cmd_apt, "legal": cmd_legal, "report": cmd_report}
+            "timeline": cmd_timeline, "apt": cmd_apt, "legal": cmd_legal, "report": cmd_report,
+            "dashboard": cmd_dashboard}
 
 
 def main(argv: list[str] | None = None) -> int:
