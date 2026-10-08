@@ -1,0 +1,236 @@
+{
+  "_note": "그룹 프로필 초기 세트. techniques·software는 MITRE ATT&CK 그룹 페이지와 공개 보안 보고서에 기재된 항목 중 일부이며, 운영 전 ATT&CK 원문과 대조·동기화해야 한다. known_iocs·reported_iocs·imphashes는 출처가 확인된 값만 직접 추가한다(현재 비어 있음).",
+  "groups": [
+    {
+      "id": "G0094",
+      "name": "Kimsuky",
+      "aliases": [
+        "Velvet Chollima",
+        "Thallium",
+        "Black Banshee",
+        "APT43(일부 중첩)"
+      ],
+      "attack_url": "https://attack.mitre.org/groups/G0094/",
+      "techniques": [
+        "T1566.001",
+        "T1566.002",
+        "T1598",
+        "T1204.001",
+        "T1204.002",
+        "T1059.001",
+        "T1059.005",
+        "T1218.005",
+        "T1547.001",
+        "T1056.001",
+        "T1176",
+        "T1027",
+        "T1140",
+        "T1105",
+        "T1071.001",
+        "T1583.001",
+        "T1112",
+        "T1564.003",
+        "T1053.005",
+        "T1102"
+      ],
+      "software": [
+        "AppleSeed",
+        "BabyShark",
+        "Gold Dragon",
+        "KGH_SPY",
+        "CSPY Downloader"
+      ],
+      "lure_keywords": [
+        "통일",
+        "북한",
+        "외교",
+        "안보",
+        "국방",
+        "탈북",
+        "자문",
+        "원고",
+        "인터뷰",
+        "세미나",
+        "교수",
+        "연구원",
+        "대북",
+        "핵",
+        "정책"
+      ],
+      "sectors": [
+        "정부",
+        "외교",
+        "국방",
+        "싱크탱크",
+        "학계",
+        "언론"
+      ],
+      "known_iocs": [],
+      "reported_iocs": [],
+      "imphashes": []
+    },
+    {
+      "id": "G0032",
+      "name": "Lazarus Group",
+      "aliases": [
+        "Hidden Cobra",
+        "ZINC",
+        "Diamond Sleet",
+        "Labyrinth Chollima"
+      ],
+      "attack_url": "https://attack.mitre.org/groups/G0032/",
+      "techniques": [
+        "T1566.001",
+        "T1566.003",
+        "T1195.002",
+        "T1204.002",
+        "T1059.001",
+        "T1059.003",
+        "T1055",
+        "T1027",
+        "T1027.002",
+        "T1140",
+        "T1070.004",
+        "T1105",
+        "T1071.001",
+        "T1573",
+        "T1543.003",
+        "T1486",
+        "T1562.001",
+        "T1622",
+        "T1218.011",
+        "T1036"
+      ],
+      "software": [
+        "Manuscrypt",
+        "AppleJeus",
+        "BLINDINGCAN",
+        "HOPLIGHT",
+        "ThreatNeedle",
+        "WannaCry",
+        "Bankshot",
+        "DRATzarus",
+        "Dacls"
+      ],
+      "lure_keywords": [
+        "채용",
+        "입사",
+        "이력서",
+        "job",
+        "recruit",
+        "career",
+        "가상자산",
+        "암호화폐",
+        "crypto",
+        "거래소",
+        "wallet",
+        "방산",
+        "defense",
+        "블록체인"
+      ],
+      "sectors": [
+        "금융",
+        "가상자산",
+        "방산",
+        "IT 공급망"
+      ],
+      "known_iocs": [],
+      "reported_iocs": [],
+      "imphashes": []
+    },
+    {
+      "id": "G0067",
+      "name": "APT37",
+      "aliases": [
+        "ScarCruft",
+        "Reaper",
+        "InkySquid",
+        "Ricochet Chollima"
+      ],
+      "attack_url": "https://attack.mitre.org/groups/G0067/",
+      "techniques": [
+        "T1566.001",
+        "T1203",
+        "T1204.002",
+        "T1059.001",
+        "T1059.003",
+        "T1059.005",
+        "T1102",
+        "T1105",
+        "T1027",
+        "T1055",
+        "T1547.001",
+        "T1113",
+        "T1123",
+        "T1189"
+      ],
+      "software": [
+        "ROKRAT",
+        "NavRAT",
+        "KARAE",
+        "CORALDECK",
+        "DOGCALL",
+        "Final1stspy"
+      ],
+      "lure_keywords": [
+        "북한",
+        "탈북",
+        "인권",
+        "언론",
+        "기자",
+        "통일",
+        "한글",
+        "hwp"
+      ],
+      "sectors": [
+        "언론",
+        "탈북민·인권 단체",
+        "정부"
+      ],
+      "known_iocs": [],
+      "reported_iocs": [],
+      "imphashes": []
+    },
+    {
+      "id": "G0138",
+      "name": "Andariel",
+      "aliases": [
+        "Silent Chollima",
+        "Onyx Sleet"
+      ],
+      "attack_url": "https://attack.mitre.org/groups/G0138/",
+      "techniques": [
+        "T1566.001",
+        "T1189",
+        "T1203",
+        "T1204.002",
+        "T1105",
+        "T1027",
+        "T1071.001",
+        "T1057",
+        "T1082"
+      ],
+      "software": [
+        "Rifdoor",
+        "TigerRAT",
+        "DTrack",
+        "Maui"
+      ],
+      "lure_keywords": [
+        "국방",
+        "방산",
+        "의료",
+        "보안 업데이트"
+      ],
+      "sectors": [
+        "국방",
+        "방산",
+        "의료",
+        "금융"
+      ],
+      "known_iocs": [],
+      "reported_iocs": [],
+      "imphashes": []
+    }
+  ]
+}

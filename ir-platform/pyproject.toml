@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "irsys"
+version = "0.1.0"
+description = "침해사고 대응·분석 종합시스템"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+yara = ["yara-python"]
+test = ["pytest"]
+
+[project.scripts]
+irsys = "irsys.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["irsys*"]
+
+[tool.setuptools.package-data]
+"irsys.data" = ["*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

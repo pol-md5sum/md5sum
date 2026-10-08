@@ -1,0 +1,19 @@
+{
+  "_note": "신고 기한 규칙. 법령 개정 시 이 파일만 수정한다. verified=false 항목은 국가법령정보센터에서 최신 조문을 확인한 뒤 true로 바꾼다.",
+  "rules": [
+    {
+      "category": "pii_leak",
+      "hours": 72,
+      "action": "정보주체 통지 및 개인정보보호위원회·KISA 신고",
+      "basis": "개인정보 보호법 제34조, 같은 법 시행령 제39조·제40조",
+      "verified": false
+    },
+    {
+      "category": "intrusion",
+      "hours": 24,
+      "action": "과학기술정보통신부 또는 KISA 침해사고 신고",
+      "basis": "정보통신망 이용촉진 및 정보보호 등에 관한 법률 제48조의3",
+      "verified": false
+    }
+  ]
+}
