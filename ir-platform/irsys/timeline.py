@@ -89,6 +89,28 @@ def build_internal(conn: sqlite3.Connection, case_id: str) -> int:
             add(conn, case_id, r["date"]["utc"], "메일 발송", f"제목: {r.get('subject', '')}",
                 ref=f"irsys:{a['target']}")
             n += 1
+    for a in load_analyses(conn, case_id, "eventlog"):
+        for f in a["result"].get("findings", []):
+            add(conn, case_id, f["ts"], "이벤트 로그", f"[{f['severity']}] {f['description']} ({f['technique']})",
+                host=f.get("computer", ""), ref=f"irsys:{a['target']}")
+            n += 1
+    for a in load_analyses(conn, case_id, "network"):
+        r = a["result"]
+        seen_sni: set[str] = set()
+        for t in r.get("tls", []):
+            if t["sni"] and t["sni"] not in seen_sni:
+                seen_sni.add(t["sni"])
+                add(conn, case_id, t["ts"], "네트워크", f"TLS 최초 접속 {t['sni']} ({t['dst']}:{t['dport']}, JA3 {t['ja3_md5']})",
+                    host=t["src"], ref=f"irsys:{a['target']}")
+                n += 1
+        for h in r.get("http", [])[:50]:
+            add(conn, case_id, h["ts"], "네트워크", f"HTTP {h['method']} {h['host']}{h['uri'][:80]}",
+                host=h["src"], ref=f"irsys:{a['target']}")
+            n += 1
+        for d in r.get("dns", [])[:50]:
+            add(conn, case_id, d["first"], "네트워크", f"DNS 최초 질의 {d['name']} → {', '.join(d['resolved']) or '-'}",
+                host=", ".join(d["clients"]), ref=f"irsys:{a['target']}")
+            n += 1
     for a in load_analyses(conn, case_id, "static"):
         pe = a["result"].get("pe") or {}
         if pe.get("compile_time_utc"):

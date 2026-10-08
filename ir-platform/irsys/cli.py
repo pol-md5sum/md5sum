@@ -9,8 +9,9 @@ import os
 import sys
 from pathlib import Path
 
-from . import attribution, cases, emailx, evidence, ioc, legal, osint, report, static, timeline
-from .db import connect, save_analysis
+from . import (attribution, cases, emailx, eventlog, evidence, ioc, legal, memory, network, osint, report,
+               response, static, timeline)
+from .db import connect, home, save_analysis
 
 
 def _actor(args) -> str:
@@ -95,6 +96,63 @@ def cmd_static(args, conn) -> None:
     added = ioc.store(conn, args.case, iocs, f"static:{ev_id}")
     cases.log(conn, args.case, _actor(args), "analysis", f"정적 분석 {ev_id} · 위험도 {result['risk']} · IOC {added}건 추가")
     _print(result)
+
+
+def _store_analysis(conn, args, kind: str, ev_id: str, result: dict, label: str) -> None:
+    save_analysis(conn, args.case, kind, ev_id, result)
+    added = ioc.store(conn, args.case, result.get("iocs", {}), f"{kind}:{ev_id}")
+    cases.log(conn, args.case, _actor(args), "analysis",
+              f"{label} {ev_id} · 탐지 {len(result.get('findings', []))}건 · IOC {added}건 추가")
+
+
+def cmd_network(args, conn) -> None:
+    path, ev_id, name = _evidence_path(conn, args, "네트워크 분석")
+    result = network.analyze(path)
+    result["file"] = name
+    _store_analysis(conn, args, "network", ev_id, result, "네트워크 분석")
+    _print({k: v for k, v in result.items() if k not in ("top_flows", "dns", "http", "tls")}
+           if not args.full else result)
+
+
+def cmd_evtlog(args, conn) -> None:
+    path, ev_id, name = _evidence_path(conn, args, "이벤트 로그 분석")
+    result = eventlog.analyze(path)
+    result["file"] = name
+    _store_analysis(conn, args, "eventlog", ev_id, result, "이벤트 로그 분석")
+    _print(result)
+
+
+def cmd_memory(args, conn) -> None:
+    if args.from_json:
+        results = memory.load_dir(Path(args.from_json))
+        ev_id = f"vol-json:{Path(args.from_json).name}"
+    else:
+        if not args.target:
+            raise ValueError("메모리 이미지(증거 번호·파일) 또는 --from-json을 지정하십시오.")
+        path, ev_id, _ = _evidence_path(conn, args, "메모리 분석(Volatility)")
+        results = memory.run(path, home() / "volatility" / ev_id)
+    result = memory.analyze(results)
+    _store_analysis(conn, args, "memory", ev_id, result, "메모리 분석")
+    _print(result)
+
+
+def cmd_response(args, conn) -> None:
+    if args.action == "plan":
+        _print(response.plan(conn, args.case, _actor(args), args.min_verdict))
+    elif args.action == "add":
+        _print(response.add(conn, args.case, args.kind, args.target, _actor(args), args.reason))
+    elif args.action == "list":
+        for r in response.list_actions(conn, args.case):
+            print(f"#{r['id']:<4} {r['status']:9} {response.KINDS[r['kind']]:10} {r['target']}  "
+                  f"(요청 {r['requested_by']}, 결정 {r['decided_by'] or '-'})")
+    elif args.action in ("approve", "reject"):
+        response.decide(conn, args.id, _actor(args), args.action == "approve", args.note or "")
+        print(f"#{args.id} {args.action}")
+    elif args.action == "export":
+        m = response.export(conn, args.case, Path(args.outdir), _actor(args))
+        print(f"{len(m['actions'])}건 내보냄 → {args.outdir}")
+        for f in m["files"]:
+            print(f"  {f}")
 
 
 def cmd_ioc(args, conn) -> None:
@@ -208,6 +266,27 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("case"); ap.add_argument("--technique", action="append", help="추가 ATT&CK 기법 ID")
     ap.add_argument("--label", action="append", help="추가 악성코드 계열명"); ap.add_argument("--text", help="추가 미끼 문구")
 
+    nw = sub.add_parser("network", help="M10 네트워크 분석 (PCAP/PCAPNG)")
+    nw.add_argument("case"); nw.add_argument("target", help="증거 번호 또는 캡처 파일")
+    nw.add_argument("--full", action="store_true", help="흐름·DNS·HTTP·TLS 상세까지 출력")
+
+    el = sub.add_parser("evtlog", help="M3 Windows 이벤트 로그 분석 (XML, EVTX는 python-evtx 필요)")
+    el.add_argument("case"); el.add_argument("target", help="증거 번호 또는 파일")
+
+    mm = sub.add_parser("memory", help="M4 메모리 분석 (Volatility 3)")
+    mm.add_argument("case"); mm.add_argument("target", nargs="?", help="메모리 이미지 증거 번호 또는 파일")
+    mm.add_argument("--from-json", help="미리 만든 Volatility JSON 결과 디렉터리")
+
+    rs = sub.add_parser("response", help="M11 대응 조치(승인 분리)").add_subparsers(dest="action", required=True)
+    x = rs.add_parser("plan"); x.add_argument("case")
+    x.add_argument("--min-verdict", choices=["malicious", "suspicious"], default="malicious")
+    x = rs.add_parser("add"); x.add_argument("case"); x.add_argument("kind", choices=list(response.KINDS))
+    x.add_argument("target"); x.add_argument("--reason", required=True)
+    x = rs.add_parser("list"); x.add_argument("case")
+    x = rs.add_parser("approve"); x.add_argument("id", type=int); x.add_argument("--note")
+    x = rs.add_parser("reject"); x.add_argument("id", type=int); x.add_argument("--note")
+    x = rs.add_parser("export"); x.add_argument("case"); x.add_argument("outdir")
+
     lg = sub.add_parser("legal", help="법적 요건").add_subparsers(dest="action", required=True)
     x = lg.add_parser("deadlines"); x.add_argument("case")
     x = lg.add_parser("mask"); x.add_argument("file")
@@ -218,6 +297,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 HANDLERS = {"case": cmd_case, "evidence": cmd_evidence, "email": cmd_email, "static": cmd_static, "ioc": cmd_ioc,
+            "network": cmd_network, "evtlog": cmd_evtlog, "memory": cmd_memory, "response": cmd_response,
             "timeline": cmd_timeline, "apt": cmd_apt, "legal": cmd_legal, "report": cmd_report}
 
 

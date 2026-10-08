@@ -38,6 +38,7 @@ def grade(score: float, axes: dict[str, float]) -> str:
 
 
 def phrase(group: str, g: str) -> str:
+    group = group.removesuffix(" Group")
     return {
         "높음": f"{group} 그룹과의 연계 가능성이 높음",
         "중간": f"{group} 그룹의 기존 수법과 유사점이 확인됨",

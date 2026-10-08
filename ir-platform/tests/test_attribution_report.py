@@ -56,7 +56,7 @@ def test_end_to_end_cli(tmp_path, monkeypatch, pe_file, capsys):
     assert "login-verify[.]example" in text
     assert "개인정보 보호법 제34조" in text and "2026-10-09T02:00:00+00:00" in text
     assert "Kimsuky" in text
-    assert "## 3줄 요약" in text and "## 10. 보고서용 문장" in text
+    assert "## 3줄 요약" in text and "## 14. 보고서용 문장" in text
     assert "T1566.001" in text
     assert "정상" in text  # 증거 취급 이력 체인
 

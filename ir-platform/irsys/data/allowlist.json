@@ -1,0 +1,12 @@
+{
+  "_note": "차단 예외 목록. 여기 있는 도메인(하위 도메인 포함)과 네트워크는 대응 조치 대상에서 자동 제외된다. 조직 도메인·주요 협력사·필수 서비스를 추가하거나 IRSYS_ALLOWLIST 환경 변수로 별도 파일을 지정한다.",
+  "domains": [
+    "microsoft.com", "windowsupdate.com", "windows.com", "office.com", "office365.com", "live.com",
+    "google.com", "googleapis.com", "gstatic.com", "apple.com", "icloud.com",
+    "naver.com", "daum.net", "kakao.com", "go.kr", "or.kr", "ac.kr", "re.kr",
+    "virustotal.com", "criminalip.io", "shodan.io", "attack.mitre.org", "law.go.kr"
+  ],
+  "networks": [
+    "8.8.8.8/32", "8.8.4.4/32", "1.1.1.1/32", "1.0.0.1/32", "168.126.63.1/32", "168.126.63.2/32"
+  ]
+}
